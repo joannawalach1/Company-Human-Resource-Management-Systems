@@ -1,13 +1,15 @@
 package pl.great.waw.company3.repository;
 
+import org.springframework.stereotype.Repository;
 import pl.great.waw.company3.domain.Employee;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Repository
 public class EmployeeRepository {
+
     private final List<Employee> employees = new ArrayList<>();
 
     public Employee getEmployee(String pesel) {
@@ -23,7 +25,7 @@ public class EmployeeRepository {
     public Employee createEmployee(Employee employee) {
         Employee emp = getEmployee(employee.getPesel());
         if (emp != null) {
-            throw new IllegalArgumentException("Pesel already exists" + employee.getPesel());
+            throw new IllegalArgumentException("Pesel already exists " + employee.getPesel());
         }
         employees.add(employee);
         return employee;

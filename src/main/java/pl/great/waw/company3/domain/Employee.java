@@ -25,6 +25,9 @@ public class Employee {
         this.modified = LocalDateTime.now();
     }
 
+    public Employee() {
+    }
+
     public void setPesel(String pesel) {
         this.pesel = pesel;
     }

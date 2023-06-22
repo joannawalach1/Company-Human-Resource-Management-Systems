@@ -2,15 +2,6 @@ server:
   port: 8081
 
 spring:
-  data:
-    mongodb:
-      authentication-database: admin
-      username: root
-      password: root
-      database: alledrogo
-      port: '27017'
-      host: localhost
-
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
