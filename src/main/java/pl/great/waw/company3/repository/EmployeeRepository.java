@@ -2,8 +2,10 @@ package pl.great.waw.company3.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.great.waw.company3.domain.Employee;
+import pl.great.waw.company3.repository.sorter.Sorter;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,8 +15,7 @@ public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
     public Employee getEmployee(String pesel) {
-        for (int i = 0; i < employees.size(); i++) {
-            Employee employee = employees.get(i);
+        for (Employee employee : employees) {
             if (Objects.equals(pesel, employee.getPesel())) {
                 return employee;
             }
@@ -44,7 +45,7 @@ public class EmployeeRepository {
         Employee emp1 = this.getEmployee(employee.getPesel());
 
         if (emp1 == null) {
-            throw new IllegalArgumentException("employee dont found with pesel " + employee.getPesel());
+            throw new IllegalArgumentException("employee doesn't found with pesel " + employee.getPesel());
         }
 
         int index = this.employees.indexOf(emp1);
@@ -59,4 +60,9 @@ public class EmployeeRepository {
                 persistedEmployee.getSalary()
         );
     }
+
+    public List<Employee> sort(Sorter sorter, List<Employee> employees, Comparator<Employee> comparator) {
+        return sorter.sort(employees, comparator);
+    }
+
 }

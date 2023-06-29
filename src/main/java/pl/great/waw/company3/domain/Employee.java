@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
 
     private String pesel;
 
@@ -79,5 +79,22 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(pesel, firstName, lastName, salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "pesel='" + pesel + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary=" + salary +
+                ", created=" + created +
+                ", modified=" + modified +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Employee employee) {
+        return this.getPesel().compareTo(employee.getPesel());
     }
 }

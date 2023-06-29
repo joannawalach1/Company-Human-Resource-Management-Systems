@@ -12,12 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeRepositoryTest {
     private static final String TEST_PESEL = "23456";
     private static final String TEST_FIRSTNAME = "Steve";
-    private static final String TEST_LASTNAME = "Brown";
+    protected static final String TEST_LASTNAME = "Brown";
 
     private static final String TEST_FIRSTNAME_2 = "Leon";
     private static final String TEST_LASTNAME_2 = "Zawodowiec";
 
-    private EmployeeRepository employeeRepo = new EmployeeRepository();
+    private final EmployeeRepository employeeRepo = new EmployeeRepository();
 
 
     @Test
@@ -50,6 +50,6 @@ class EmployeeRepositoryTest {
 
         Employee savedEmployee = this.employeeRepo.updateEmployee(employee2);
 
-        assertTrue(savedEmployee.equals( this.employeeRepo.getEmployee(employee2.getPesel())));
+        assertEquals(savedEmployee, this.employeeRepo.getEmployee(employee2.getPesel()));
     }
 }
