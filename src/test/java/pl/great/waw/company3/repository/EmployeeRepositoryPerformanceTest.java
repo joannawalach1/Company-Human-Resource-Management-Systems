@@ -1,12 +1,5 @@
 package pl.great.waw.company3.repository;
 
-import org.junit.Test;
-import pl.great.waw.company3.domain.Employee;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmployeeRepositoryPerformanceTest {
     private final EmployeeRepository employeeRepo = new EmployeeRepository();
 //

@@ -6,10 +6,7 @@ import pl.great.waw.company3.domain.Employee;
 import pl.great.waw.company3.repository.LastNameEmployeeComparator;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +40,14 @@ class SorterTest {
 
     @Test
     void testSort() {
+
+        Stack<String> stack = new Stack<String>();
+        stack.push("a");
+        stack.push("b");
+        stack.push("c");
+
+        String pop = stack.pop();
+
         List<Employee> employees = new ArrayList<>();
         for (int i = 100; i > 0; i--) {
             employees.add(new Employee("23456", "Steve", String.valueOf(i), BigDecimal.ONE));
@@ -57,4 +62,5 @@ class SorterTest {
         }
         ));
     }
+
 }

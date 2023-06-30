@@ -3,5 +3,5 @@ server:
 
 spring:
   mvc:
-    path match:
+    pathmatch:
       matching-strategy: ANT_PATH_MATCHER
