@@ -1,7 +1,5 @@
 package pl.great.waw.company3.repository;
 
-import pl.great.waw.company3.domain.Employee;
-
 public class JoraArrayList {
     private Object[] objects;
 

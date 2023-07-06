@@ -2,9 +2,10 @@ package pl.great.waw.company3.repository;
 
 import org.junit.jupiter.api.Test;
 import pl.great.waw.company3.domain.Employee;
+import pl.great.waw.company3.repository.sorter.Sorter;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,5 +52,35 @@ class EmployeeRepositoryTest {
         Employee savedEmployee = this.employeeRepo.updateEmployee(employee2);
 
         assertEquals(savedEmployee, this.employeeRepo.getEmployee(employee2.getPesel()));
+    }
+
+    @Test
+    void getAllEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = this.employeeRepo.createEmployee(new Employee("111111", "Gart", "Well", BigDecimal.ONE));
+        Employee employee2 = this.employeeRepo.createEmployee(new Employee("222222", "Rety", "Bell", BigDecimal.ONE));
+        Employee employee3 = this.employeeRepo.createEmployee(new Employee("333333", "Sort", "Dell", BigDecimal.TEN));
+        this.employeeRepo.getAllEmployees();
+        assertNotNull(employees);
+    }
+
+    @Test
+    void sortEmployees() {
+        List<Employee> employees = new ArrayList<>();
+        Employee employee1 = new Employee("111111", "Gart", "Well", BigDecimal.ONE);
+        Employee employee2 = new Employee("222222", "Rety", "Bell", BigDecimal.ONE);
+        Employee employee3 = new Employee("333333", "Sort", "Dell", BigDecimal.TEN);
+        employees.add(employee1);
+        employees.add(employee2);
+        employees.add(employee3);
+
+        this.employeeRepo.createEmployee(employee1);
+        this.employeeRepo.createEmployee(employee2);
+        this.employeeRepo.createEmployee(employee3);
+        List<Employee> sorted = this.employeeRepo.sortAllEmployees(new LastNameEmployeeComparator());
+        assertNotNull(employees);
+
+        assertEquals(employee2, sorted.get(0));
+        assertEquals(employee1, sorted.get(2));
     }
 }

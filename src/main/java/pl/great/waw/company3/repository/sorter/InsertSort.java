@@ -12,22 +12,20 @@ public class InsertSort implements Sorter {
     public List<Employee> sort(List<Employee> employees, Comparator<Employee> comparator) {
 
         int n = employees.size();
-        int i;
 
-        Employee[] employeeArray = employees.toArray(new Employee[n]);
-
-        for (i = 1; i < n; i++) {
-            Employee number = employeeArray[i];
-
+        for (int i = 1; i < n; i++) {
+            Employee currentEmployee = employees.get(i);
             int j = i - 1;
-            while (j >= 0 && employeeArray[j].getSalary().compareTo(number.getSalary()) > 0) {
-                employeeArray[j + 1] = employeeArray[j];
+
+            while (j >= 0 && comparator.compare(employees.get(j), currentEmployee) > 0) {
+                employees.set(j + 1, employees.get(j));
                 j--;
             }
-            employeeArray[j + 1] = number;
+
+            employees.set(j + 1, currentEmployee);
         }
 
-        return Arrays.asList(employeeArray);
+        return employees;
     }
 
 }

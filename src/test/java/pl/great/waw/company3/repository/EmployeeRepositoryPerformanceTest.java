@@ -1,7 +1,15 @@
-package pl.great.waw.company3.repository;
-
-public class EmployeeRepositoryPerformanceTest {
-    private final EmployeeRepository employeeRepo = new EmployeeRepository();
+//package pl.great.waw.company3.repository;
+//
+//import org.junit.jupiter.api.Test;
+//import pl.great.waw.company3.domain.Employee;
+//
+//import java.math.BigDecimal;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//public class EmployeeRepositoryPerformanceTest {
+//    private final EmployeeRepository employeeRepo = new EmployeeRepository();
+//
 //
 //    @Test
 //    public void testSortBigDecimalsPerformance() {
@@ -66,4 +74,4 @@ public class EmployeeRepositoryPerformanceTest {
 //        long duration = endTime - startTime;
 //        System.out.println("Czas usunięcia pracowników: " + duration + " μs");
 //    }
-}
+//}

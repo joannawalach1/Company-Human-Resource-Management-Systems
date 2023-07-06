@@ -6,5 +6,5 @@ import java.util.Comparator;
 import java.util.List;
 
 public interface Sorter {
-    List<Employee> sort(List<Employee> employees, Comparator<Employee> comparator);
+     List<Employee> sort(List<Employee> employees, Comparator<Employee> comparator);
 }

@@ -25,9 +25,6 @@ public class Employee implements Comparable<Employee> {
         this.modified = LocalDateTime.now();
     }
 
-    public Employee() {
-    }
-
     public void setPesel(String pesel) {
         this.pesel = pesel;
     }

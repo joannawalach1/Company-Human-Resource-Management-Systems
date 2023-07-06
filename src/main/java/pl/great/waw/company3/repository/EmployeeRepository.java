@@ -2,17 +2,18 @@ package pl.great.waw.company3.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.great.waw.company3.domain.Employee;
+import pl.great.waw.company3.repository.sorter.BubbleSort;
 import pl.great.waw.company3.repository.sorter.Sorter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Repository
 public class EmployeeRepository {
 
     private final List<Employee> employees = new ArrayList<>();
+
+    private Sorter sorter = new BubbleSort();
 
     public Employee getEmployee(String pesel) {
         for (Employee employee : employees) {
@@ -61,8 +62,16 @@ public class EmployeeRepository {
         );
     }
 
-    public List<Employee> sort(Sorter sorter, List<Employee> employees, Comparator<Employee> comparator) {
+    public List<Employee> sortEmployees(Sorter sorter, List<Employee> employees, Comparator<Employee> comparator) {
         return sorter.sort(employees, comparator);
     }
 
+    public List<Employee> getAllEmployees() {
+        return employees;
+    }
+
+    public List<Employee> sortAllEmployees( Comparator<Employee> comparator) {
+
+        return sorter.sort(getAllEmployees(), comparator);
+    }
 }
