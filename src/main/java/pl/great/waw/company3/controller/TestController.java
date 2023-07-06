@@ -21,7 +21,7 @@ public class TestController {
     public void generateEmpl(@PathVariable int n) {
 
         for (int i = n; i > 0; i--) {
-            employeeRepository.createEmployee(new Employee(""+i,"A"+i,"B"+i, BigDecimal.valueOf(i)));
+            employeeRepository.create(new Employee(""+i,"A"+i,"B"+i, BigDecimal.valueOf(i)));
         }
     }
 }

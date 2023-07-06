@@ -5,7 +5,6 @@ import pl.great.waw.company3.domain.Employee;
 import pl.great.waw.company3.repository.sorter.BubbleSort;
 import pl.great.waw.company3.repository.sorter.Sorter;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 @Repository
@@ -15,7 +14,7 @@ public class EmployeeRepository {
 
     private Sorter sorter = new BubbleSort();
 
-    public Employee getEmployee(String pesel) {
+    public Employee get(String pesel) {
         for (Employee employee : employees) {
             if (Objects.equals(pesel, employee.getPesel())) {
                 return employee;
@@ -24,8 +23,8 @@ public class EmployeeRepository {
         return null;
     }
 
-    public Employee createEmployee(Employee employee) {
-        Employee emp = getEmployee(employee.getPesel());
+    public Employee create(Employee employee) {
+        Employee emp = get(employee.getPesel());
         if (emp != null) {
             throw new IllegalArgumentException("Pesel already exists " + employee.getPesel());
         }
@@ -33,8 +32,8 @@ public class EmployeeRepository {
         return employee;
     }
 
-    public boolean deleteEmployee(String pesel) {
-        Employee emp = getEmployee(pesel);
+    public boolean delete(String pesel) {
+        Employee emp = get(pesel);
         if (emp == null) {
             throw new IllegalArgumentException("Pesel doesn't exist" + pesel);
         }
@@ -42,8 +41,8 @@ public class EmployeeRepository {
         return this.employees.remove(i) != null;
     }
 
-    public Employee updateEmployee(Employee employee) {
-        Employee emp1 = this.getEmployee(employee.getPesel());
+    public Employee update(Employee employee) {
+        Employee emp1 = this.get(employee.getPesel());
 
         if (emp1 == null) {
             throw new IllegalArgumentException("employee doesn't found with pesel " + employee.getPesel());
@@ -52,7 +51,7 @@ public class EmployeeRepository {
         int index = this.employees.indexOf(emp1);
         this.employees.set(index, employee);
 
-        Employee persistedEmployee = getEmployee(employee.getPesel());
+        Employee persistedEmployee = get(employee.getPesel());
 
         return new Employee(
                 persistedEmployee.getPesel(),

@@ -2,7 +2,6 @@ package pl.great.waw.company3.repository;
 
 import org.junit.jupiter.api.Test;
 import pl.great.waw.company3.domain.Employee;
-import pl.great.waw.company3.repository.sorter.Sorter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,14 +22,14 @@ class EmployeeRepositoryTest {
 
     @Test
     void getEmployee() {
-        Employee employee = this.employeeRepo.createEmployee(new Employee("23456", "Steve", "Brown", BigDecimal.ONE));
-        Employee emp = employeeRepo.getEmployee("23456");
+        Employee employee = this.employeeRepo.create(new Employee("23456", "Steve", "Brown", BigDecimal.ONE));
+        Employee emp = employeeRepo.get("23456");
         assertEquals(employee, emp);
     }
 
     @Test
     void createEmployee() {
-        Employee employee = this.employeeRepo.createEmployee(new Employee("23456", "Steve", "Brown", BigDecimal.ONE));
+        Employee employee = this.employeeRepo.create(new Employee("23456", "Steve", "Brown", BigDecimal.ONE));
         assertTrue(employee != null);
         assertEquals(TEST_PESEL, employee.getPesel());
         assertEquals(TEST_FIRSTNAME, employee.getFirstName());
@@ -40,26 +39,26 @@ class EmployeeRepositoryTest {
 
     @Test
     void delete() {
-        Employee employee = this.employeeRepo.createEmployee(new Employee(TEST_PESEL, TEST_FIRSTNAME, TEST_LASTNAME, BigDecimal.ONE));
-        assertTrue(employeeRepo.deleteEmployee(TEST_PESEL));
+        Employee employee = this.employeeRepo.create(new Employee(TEST_PESEL, TEST_FIRSTNAME, TEST_LASTNAME, BigDecimal.ONE));
+        assertTrue(employeeRepo.delete(TEST_PESEL));
     }
 
     @Test
     void updateEmployee() {
-        this.employeeRepo.createEmployee(new Employee(TEST_PESEL, TEST_FIRSTNAME, TEST_LASTNAME, BigDecimal.ONE));
+        this.employeeRepo.create(new Employee(TEST_PESEL, TEST_FIRSTNAME, TEST_LASTNAME, BigDecimal.ONE));
         Employee employee2 = new Employee(TEST_PESEL, TEST_FIRSTNAME_2, TEST_LASTNAME_2, BigDecimal.ONE);
 
-        Employee savedEmployee = this.employeeRepo.updateEmployee(employee2);
+        Employee savedEmployee = this.employeeRepo.update(employee2);
 
-        assertEquals(savedEmployee, this.employeeRepo.getEmployee(employee2.getPesel()));
+        assertEquals(savedEmployee, this.employeeRepo.get(employee2.getPesel()));
     }
 
     @Test
     void getAllEmployees() {
         List<Employee> employees = new ArrayList<>();
-        Employee employee1 = this.employeeRepo.createEmployee(new Employee("111111", "Gart", "Well", BigDecimal.ONE));
-        Employee employee2 = this.employeeRepo.createEmployee(new Employee("222222", "Rety", "Bell", BigDecimal.ONE));
-        Employee employee3 = this.employeeRepo.createEmployee(new Employee("333333", "Sort", "Dell", BigDecimal.TEN));
+        Employee employee1 = this.employeeRepo.create(new Employee("111111", "Gart", "Well", BigDecimal.ONE));
+        Employee employee2 = this.employeeRepo.create(new Employee("222222", "Rety", "Bell", BigDecimal.ONE));
+        Employee employee3 = this.employeeRepo.create(new Employee("333333", "Sort", "Dell", BigDecimal.TEN));
         this.employeeRepo.getAllEmployees();
         assertNotNull(employees);
     }
@@ -74,9 +73,9 @@ class EmployeeRepositoryTest {
         employees.add(employee2);
         employees.add(employee3);
 
-        this.employeeRepo.createEmployee(employee1);
-        this.employeeRepo.createEmployee(employee2);
-        this.employeeRepo.createEmployee(employee3);
+        this.employeeRepo.create(employee1);
+        this.employeeRepo.create(employee2);
+        this.employeeRepo.create(employee3);
         List<Employee> sorted = this.employeeRepo.sortAllEmployees(new LastNameEmployeeComparator());
         assertNotNull(employees);
 

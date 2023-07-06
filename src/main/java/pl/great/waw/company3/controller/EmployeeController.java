@@ -3,11 +3,9 @@ package pl.great.waw.company3.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.great.waw.company3.domain.Employee;
-import pl.great.waw.company3.repository.EmployeeRepository;
 import pl.great.waw.company3.repository.LastNameEmployeeComparator;
 import pl.great.waw.company3.repository.SalaryEmployeeComparator;
-import pl.great.waw.company3.repository.sorter.BubbleSort;
-import pl.great.waw.company3.repository.sorter.Sorter;
+import pl.great.waw.company3.service.EmployeeService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -17,31 +15,31 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @GetMapping(value = "/{pesel}")
     public Employee getEmployee(@PathVariable String pesel) {
-        return employeeRepository.getEmployee(pesel);
+        return employeeService.get(pesel);
     }
 
     @PostMapping
     public Employee postEmployee(@RequestBody Employee employee) {
-        return employeeRepository.createEmployee(employee);
+        return employeeService.create(employee);
     }
 
     @DeleteMapping("/{pesel}")
     public boolean deleteEmployee(@PathVariable String pesel) {
-        return employeeRepository.deleteEmployee(pesel);
+        return employeeService.delete(pesel);
     }
 
     @PutMapping()
     public Employee update(@RequestBody Employee employee) {
-        return employeeRepository.updateEmployee(employee);
+        return employeeService.update(employee);
     }
 
     @GetMapping("/employees")
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getAllEmployees();
+        return employeeService.getAll();
     }
 
     @PostMapping("/employees/sort")
@@ -55,6 +53,6 @@ public class EmployeeController {
             comparator = new SalaryEmployeeComparator();
         }
 
-        return employeeRepository.sortAllEmployees(comparator);
+        return employeeService.sort(comparator);
     }
 }
