@@ -33,7 +33,6 @@ public class RPN {
                 }
                 default -> stack.push(Integer.parseInt(token));
             }
-
         }
         return stack.peek();
     }
