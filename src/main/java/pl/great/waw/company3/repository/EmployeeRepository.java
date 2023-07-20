@@ -32,6 +32,10 @@ public class EmployeeRepository {
         return employee;
     }
 
+    public void createAll(List<Employee> employeeToCreate){
+        employees.addAll(employeeToCreate);
+    }
+
     public boolean delete(String pesel) {
         Employee emp = get(pesel);
         if (emp == null) {
@@ -39,6 +43,10 @@ public class EmployeeRepository {
         }
         int i = this.employees.indexOf(emp);
         return this.employees.remove(i) != null;
+    }
+
+    public void deleteAll(){
+        this.employees.clear();
     }
 
     public Employee update(Employee employee) {
@@ -66,7 +74,7 @@ public class EmployeeRepository {
     }
 
     public List<Employee> getAllEmployees() {
-        return employees;
+        return new ArrayList<>(employees);
     }
 
     public List<Employee> sortAllEmployees( Comparator<Employee> comparator) {

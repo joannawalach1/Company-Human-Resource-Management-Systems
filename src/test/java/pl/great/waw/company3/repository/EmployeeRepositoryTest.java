@@ -10,9 +10,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeRepositoryTest {
+
     private static final String TEST_PESEL = "23456";
     private static final String TEST_FIRSTNAME = "Steve";
-    protected static final String TEST_LASTNAME = "Brown";
+    private static final String TEST_LASTNAME = "Brown";
 
     private static final String TEST_FIRSTNAME_2 = "Leon";
     private static final String TEST_LASTNAME_2 = "Zawodowiec";
