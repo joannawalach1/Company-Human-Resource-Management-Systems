@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class EmployeeRepositoryTest {
+class EmployeeCrudRepositoryTest {
 
     private static final String TEST_PESEL = "23456";
     private static final String TEST_FIRSTNAME = "Steve";

@@ -8,12 +8,13 @@ import pl.great.waw.company3.repository.sorter.Sorter;
 import java.util.*;
 
 @Repository
-public class EmployeeRepository {
+public class EmployeeRepository implements CrudRepository<Employee>{
 
     private final List<Employee> employees = new ArrayList<>();
 
     private Sorter sorter = new BubbleSort();
 
+    @Override
     public Employee get(String pesel) {
         for (Employee employee : employees) {
             if (Objects.equals(pesel, employee.getPesel())) {
@@ -23,6 +24,7 @@ public class EmployeeRepository {
         return null;
     }
 
+    @Override
     public Employee create(Employee employee) {
         Employee emp = get(employee.getPesel());
         if (emp != null) {
@@ -36,6 +38,7 @@ public class EmployeeRepository {
         employees.addAll(employeeToCreate);
     }
 
+    @Override
     public boolean delete(String pesel) {
         Employee emp = get(pesel);
         if (emp == null) {
@@ -49,6 +52,7 @@ public class EmployeeRepository {
         this.employees.clear();
     }
 
+    @Override
     public Employee update(Employee employee) {
         Employee emp1 = this.get(employee.getPesel());
 

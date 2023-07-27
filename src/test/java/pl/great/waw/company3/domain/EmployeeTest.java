@@ -10,6 +10,9 @@ class EmployeeTest {
 
     @Test
     void getPesel() {
+
+        int maxValue = Integer.MAX_VALUE + Integer.MAX_VALUE;
+
         Employee employee = new Employee("8787878787", "pawel", "sz", BigDecimal.ONE);
 
         assertEquals( employee.getPesel(),"8787878787" );
