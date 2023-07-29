@@ -2,9 +2,10 @@ package pl.great.waw.company3.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
-public class Employee implements Comparable<Employee> {
+public class Employee implements Comparable<Employee>{
 
     private String pesel;
 

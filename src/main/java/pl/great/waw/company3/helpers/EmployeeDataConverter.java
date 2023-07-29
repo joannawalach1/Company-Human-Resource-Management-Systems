@@ -19,11 +19,11 @@ public class EmployeeDataConverter {
     private EmployeeDataRepository employeeDataRepository;
 
     @Autowired
-    private ObjectMapper objectDataMapper;
+    private ObjectMapper objectMapper;
 
     public List<EmployeeData> loadEmployeeData(String path) throws IOException {
         String employeeJson = Files.readString(Path.of(path));
-        List<EmployeeData> employeeDatas = objectDataMapper.readValue(employeeJson, new TypeReference<>() {
+        List<EmployeeData> employeeDatas = objectMapper.readValue(employeeJson, new TypeReference<>() {
         });
 
         employeeDataRepository.createAll(employeeDatas);
@@ -34,7 +34,7 @@ public class EmployeeDataConverter {
         List<EmployeeData> allEmployees = employeeDataRepository.getAll();
 
         Path fileName = Path.of(path);
-        String s = objectDataMapper.writeValueAsString(allEmployees);
+        String s = objectMapper.writeValueAsString(allEmployees);
 
         Files.writeString(fileName, s);
     }
