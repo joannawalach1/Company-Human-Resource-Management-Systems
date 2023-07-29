@@ -12,7 +12,7 @@ public class EmployeeRepository implements CrudRepository<Employee>{
 
     private final List<Employee> employees = new ArrayList<>();
 
-    private Sorter sorter = new BubbleSort();
+    private final Sorter sorter = new BubbleSort();
 
     @Override
     public Employee get(String pesel) {

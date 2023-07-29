@@ -3,7 +3,6 @@ package pl.great.waw.company3.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.great.waw.company3.domain.Employee;
-import pl.great.waw.company3.domain.EmployeeData;
 import pl.great.waw.company3.repository.LastNameEmployeeComparator;
 import pl.great.waw.company3.repository.SalaryEmployeeComparator;
 import pl.great.waw.company3.service.EmployeeService;

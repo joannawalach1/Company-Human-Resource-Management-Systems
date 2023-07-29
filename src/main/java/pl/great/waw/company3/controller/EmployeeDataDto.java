@@ -1,10 +1,10 @@
-package pl.great.waw.company3.domain;
+package pl.great.waw.company3.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class EmployeeData {
+public class EmployeeDataDto {
     private String id;
     private String employeePesel;
     private int month;
@@ -13,7 +13,8 @@ public class EmployeeData {
     private LocalDateTime created;
     private LocalDateTime updated;
 
-    public EmployeeData(String id, String employeePesel, int month, int year, BigDecimal salaryMonth, LocalDateTime created, LocalDateTime updated) {
+
+    public EmployeeDataDto(String id, String employeePesel, int month, int year, BigDecimal salaryMonth, LocalDateTime created, LocalDateTime updated) {
         this.id = id;
         this.employeePesel = employeePesel;
         this.month = month;
@@ -23,15 +24,11 @@ public class EmployeeData {
         this.updated = updated;
     }
 
-    public EmployeeData() {
+    public EmployeeDataDto() {
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmployeePesel() {
@@ -58,12 +55,12 @@ public class EmployeeData {
         this.year = year;
     }
 
-    public BigDecimal getSalaryMonth() {
+    public BigDecimal getMonthSalary() {
         return salaryMonth;
     }
 
-    public void setSalaryMonth(BigDecimal salaryMonth) {
-        this.salaryMonth = salaryMonth;
+    public void setMonthSalary(BigDecimal monthSalary) {
+        this.salaryMonth = monthSalary;
     }
 
     public LocalDateTime getCreated() {
@@ -82,11 +79,15 @@ public class EmployeeData {
         this.updated = updated;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmployeeData that = (EmployeeData) o;
+        EmployeeDataDto that = (EmployeeDataDto) o;
         return month == that.month && year == that.year && Objects.equals(id, that.id) && Objects.equals(employeePesel, that.employeePesel) && Objects.equals(salaryMonth, that.salaryMonth) && Objects.equals(created, that.created) && Objects.equals(updated, that.updated);
     }
 
@@ -97,12 +98,12 @@ public class EmployeeData {
 
     @Override
     public String toString() {
-        return "EmployeeData{" +
+        return "EmployeeDataDto{" +
                 "id='" + id + '\'' +
                 ", employeePesel='" + employeePesel + '\'' +
                 ", month=" + month +
                 ", year=" + year +
-                ", monthSalary=" + salaryMonth +
+                ", salaryMonth=" + salaryMonth +
                 ", created=" + created +
                 ", updated=" + updated +
                 '}';

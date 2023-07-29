@@ -1,9 +1,4 @@
-[
-  {
-    "pesel": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "salary": 0,
+[  {
     "created": [
       2023,
       7,
@@ -13,6 +8,8 @@
       13,
       919000000
     ],
+    "firstName": "string",
+    "lastName": "string",
     "modified": [
       2023,
       7,
@@ -21,37 +18,11 @@
       18,
       13,
       919000000
-    ]
-  },
-  {
+    ],
     "pesel": "string1",
-    "firstName": "string",
-    "lastName": "string",
-    "salary": 0,
-    "created": [
-      2023,
-      7,
-      17,
-      18,
-      18,
-      13,
-      919000000
-    ],
-    "modified": [
-      2023,
-      7,
-      17,
-      18,
-      18,
-      13,
-      919000000
-    ]
+    "salary": 0
   },
   {
-    "pesel": "23456",
-    "firstName": "Steve",
-    "lastName": "Brown",
-    "salary": 1,
     "created": [
       2023,
       7,
@@ -61,6 +32,8 @@
       10,
       504976000
     ],
+    "firstName": "Steve",
+    "lastName": "Brown",
     "modified": [
       2023,
       7,
@@ -69,6 +42,7 @@
       14,
       10,
       505012000
-    ]
-  }
-]
+    ],
+    "pesel": "23456",
+    "salary": 1
+  }]

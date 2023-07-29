@@ -41,7 +41,7 @@ class SorterTest {
     @Test
     void testSort() {
 
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
         stack.push("a");
         stack.push("b");
         stack.push("c");

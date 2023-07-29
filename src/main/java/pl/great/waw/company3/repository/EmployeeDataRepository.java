@@ -2,33 +2,76 @@ package pl.great.waw.company3.repository;
 
 import org.springframework.stereotype.Repository;
 import pl.great.waw.company3.domain.EmployeeData;
+import pl.great.waw.company3.repository.sorter.BubbleSort;
+import pl.great.waw.company3.repository.sorter.Sorter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
-public class EmployeeDataRepository implements CrudRepository<EmployeeData> {
+public class EmployeeDataRepository {
 
-    private final List<EmployeeData> employeeDataList = new ArrayList<>();
+    private final List<EmployeeData> employeeDataFromRepo = new ArrayList<>();
+    private final Sorter sorter = new BubbleSort();
 
+    public EmployeeData createData(EmployeeData employeeData) {
+        String pesel = employeeData.getEmployeePesel();
+        boolean peselExists = employeeDataFromRepo.stream()
+                .anyMatch(data -> data.getEmployeePesel().equals(pesel));
 
-    @Override
-    public EmployeeData get(String id) {
-        return null;
+        if (peselExists) {
+            throw new IllegalArgumentException("Pesel exists: " + pesel);
+        }
+
+        employeeDataFromRepo.add(employeeData);
+        return employeeData;
     }
 
-    @Override
-    public EmployeeData create(EmployeeData entity) {
-        return null;
+    private boolean peselExists(String pesel) {
+        return employeeDataFromRepo
+                .stream()
+                .anyMatch(data -> data.getEmployeePesel().equals(pesel));
     }
 
-    @Override
-    public EmployeeData update(EmployeeData entity) {
-        return null;
+    public void createAll(List<EmployeeData> employeesToCreate){
+        employeeDataFromRepo.addAll(employeesToCreate);
+    }
+    public List<EmployeeData> getData(String employeeId) {
+        return employeeDataFromRepo.stream()
+                .filter(employeeData -> employeeData.getId().equals(employeeId))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public boolean delete(String id) {
-        return false;
+    public EmployeeData updateData(String employeeId, EmployeeData employeeData) {
+        List<EmployeeData> employeeDataList = getData(employeeId);
+        Optional<EmployeeData> oldData = employeeDataList.stream()
+                .filter(data -> Objects.equals(data.getMonth(), employeeData.getMonth()))
+                .findFirst();
+
+        oldData.ifPresent(old -> {
+            int index = employeeDataList.indexOf(old);
+            employeeDataList.set(index, employeeData);
+        });
+
+        return employeeData;
+    }
+
+    public void deleteData(String employeeId) {
+        employeeDataFromRepo.removeAll(getData(employeeId));
+    }
+
+    public void deleteAll(){
+        this.employeeDataFromRepo.clear();
+    }
+
+    public List<EmployeeData> getAll() {
+        return employeeDataFromRepo;
+    }
+
+    public int sizeData() {
+        return employeeDataFromRepo.size();
     }
 }
