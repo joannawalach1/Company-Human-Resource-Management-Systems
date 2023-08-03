@@ -19,12 +19,14 @@ public class EmployeeDataRepository {
 
     public EmployeeData createData(EmployeeData employeeData) {
         String pesel = employeeData.getEmployeePesel();
-        boolean peselExists = employeeDataFromRepo.stream()
-                .anyMatch(data -> data.getEmployeePesel().equals(pesel));
 
-        if (peselExists) {
-            throw new IllegalArgumentException("Pesel exists: " + pesel);
-        }
+        //TODO sprawdzenie czy pesel istnieje, musi być w liście employee
+//        boolean peselExists = employeeDataFromRepo.stream()
+//                .anyMatch(data -> data.getEmployeePesel().equals(pesel));
+//
+//        if (peselExists) {
+//            throw new IllegalArgumentException("Pesel exists: " + pesel);
+//        }
 
         employeeDataFromRepo.add(employeeData);
         return employeeData;
@@ -39,9 +41,16 @@ public class EmployeeDataRepository {
     public void createAll(List<EmployeeData> employeesToCreate){
         employeeDataFromRepo.addAll(employeesToCreate);
     }
-    public List<EmployeeData> getData(String employeeId) {
+    public List<EmployeeData> getData(String pesel) {
         return employeeDataFromRepo.stream()
-                .filter(employeeData -> employeeData.getId().equals(employeeId))
+                .filter(employeeData -> employeeData.getEmployeePesel().equals(pesel))
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeData> getYearlyData(String pesel, int year) {
+        return employeeDataFromRepo.stream()
+                .filter(employeeData -> employeeData.getEmployeePesel().equals(pesel))
+                .filter(employeeData -> employeeData.getYear() == (year))
                 .collect(Collectors.toList());
     }
 

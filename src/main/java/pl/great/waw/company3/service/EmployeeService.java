@@ -11,6 +11,7 @@ import pl.great.waw.company3.repository.EmployeeRepository;
 import pl.great.waw.company3.service.mapper.EmployeeDataMapper;
 import pl.great.waw.company3.service.mapper.EmployeeMapper;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,15 +37,28 @@ public class EmployeeService {
         return employeeMapper.toDto(employeeSaved1);
     }
 
-//    public EmployeeDataDto createData(EmployeeDataDto employeeDataDto) {
-//        EmployeeData employeeData = employeeDataMapper.fromDto(employeeData);
-//        EmployeeDataDto employeeSaved2 = employeeDataRepository.createData(employeeDataDto);
-//        return employeeDataMapper.toDto(employeeSaved2);
-//    }
-
+    public EmployeeDataDto createData(EmployeeDataDto employeeDataDto) {
+        EmployeeData employeeData = employeeDataMapper.fromDto(employeeDataDto);
+        EmployeeData employeeSaved2 = employeeDataRepository.createData(employeeData);
+        return employeeDataMapper.toDto(employeeSaved2);
+    }
 
     public EmployeeDto get(String pesel) {
         return this.employeeMapper.toDto(this.employeeRepository.get(pesel));
+    }
+
+    public List<EmployeeDataDto> getData(String pesel) {
+        return this.employeeDataRepository.getData(pesel)
+                .stream()
+                .map(EmployeeDataMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public BigDecimal totalYearlySalary(String pesel, int year) {
+        List<EmployeeData> yearlyData = this.employeeDataRepository.getYearlyData(pesel, year);
+         return yearlyData.stream()
+                .map(EmployeeData::getSalaryMonth)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public boolean delete(String pesel) {

@@ -17,6 +17,14 @@ public class EmployeeDto {
 
     private List<EmployeeData> employeeDataList;
 
+    public EmployeeDto(String pesel, String firstName, String lastName, BigDecimal salary, List<EmployeeData> employeeDataList) {
+        this.pesel = pesel;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+        this.employeeDataList = employeeDataList;
+    }
+
     public EmployeeDto(String pesel, String firstName, String lastName, BigDecimal salary) {
         this.pesel = pesel;
         this.firstName = firstName;

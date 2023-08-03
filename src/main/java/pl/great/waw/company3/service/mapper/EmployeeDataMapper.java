@@ -6,7 +6,7 @@ import pl.great.waw.company3.domain.EmployeeData;
 
 @Component
 public class EmployeeDataMapper {
-    public static EmployeeDataDto fromDto(EmployeeData employeeData) {
+    public static EmployeeDataDto toDto(EmployeeData employeeData) {
         return new EmployeeDataDto(
                 employeeData.getId(),
                 employeeData.getEmployeePesel(),
@@ -17,7 +17,7 @@ public class EmployeeDataMapper {
                 employeeData.getUpdated());
     }
 
-    public static EmployeeData toDto(EmployeeDataDto employeeDataDto) {
+    public static EmployeeData fromDto(EmployeeDataDto employeeDataDto) {
         return new EmployeeData(
                 employeeDataDto.getId(),
                 employeeDataDto.getEmployeePesel(),

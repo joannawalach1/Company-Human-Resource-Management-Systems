@@ -3,10 +3,12 @@ package pl.great.waw.company3.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.great.waw.company3.domain.Employee;
+import pl.great.waw.company3.domain.EmployeeData;
 import pl.great.waw.company3.repository.LastNameEmployeeComparator;
 import pl.great.waw.company3.repository.SalaryEmployeeComparator;
 import pl.great.waw.company3.service.EmployeeService;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,6 +27,21 @@ public class EmployeeController {
     @PostMapping
     public EmployeeDto postEmployee(@RequestBody EmployeeDto employee) {
         return employeeService.create(employee);
+    }
+
+    @GetMapping(value = "/employeeData/{pesel}")
+    public List<EmployeeDataDto> getEmployeeDataList (@PathVariable String pesel) {
+        return employeeService.getData(pesel);
+    }
+
+    @GetMapping(value = "/employeeData/yearly/{pesel}/{year}")
+    public BigDecimal getYearlySum (@PathVariable String pesel, int year) {
+        return employeeService.totalYearlySalary(pesel, year);
+    }
+
+    @PostMapping(value = "/employeeData")
+    public EmployeeDataDto postEmployeeData(@RequestBody EmployeeDataDto employeeDataDto) {
+        return employeeService.createData(employeeDataDto);
     }
 
     @DeleteMapping("/{pesel}")

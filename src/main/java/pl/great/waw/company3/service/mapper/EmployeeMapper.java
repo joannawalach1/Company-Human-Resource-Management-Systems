@@ -7,11 +7,12 @@ import pl.great.waw.company3.domain.Employee;
 @Component
 public class EmployeeMapper {
 
+
     public Employee fromDto(EmployeeDto dto) {
-        return new Employee(dto.getPesel(), dto.getFirstName(), dto.getLastName(), dto.getSalary());
+        return new Employee(dto.getPesel(), dto.getFirstName(), dto.getLastName(), dto.getSalary(), dto.getEmployeeDataList());
     }
 
     public EmployeeDto toDto(Employee employee) {
-        return new EmployeeDto(employee.getPesel(), employee.getFirstName(), employee.getLastName(), employee.getSalary());
+        return new EmployeeDto(employee.getPesel(), employee.getFirstName(), employee.getLastName(), employee.getSalary(), employee.getEmployeeDataList());
     }
 }
