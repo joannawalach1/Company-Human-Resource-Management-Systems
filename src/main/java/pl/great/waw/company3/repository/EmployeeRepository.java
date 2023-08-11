@@ -82,7 +82,6 @@ public class EmployeeRepository implements CrudRepository<Employee>{
     }
 
     public List<Employee> sortAllEmployees( Comparator<Employee> comparator) {
-
         return sorter.sort(getAllEmployees(), comparator);
     }
 }

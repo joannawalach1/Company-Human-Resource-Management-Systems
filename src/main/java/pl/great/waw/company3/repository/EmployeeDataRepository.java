@@ -20,14 +20,6 @@ public class EmployeeDataRepository {
     public EmployeeData createData(EmployeeData employeeData) {
         String pesel = employeeData.getEmployeePesel();
 
-        //TODO sprawdzenie czy pesel istnieje, musi być w liście employee
-//        boolean peselExists = employeeDataFromRepo.stream()
-//                .anyMatch(data -> data.getEmployeePesel().equals(pesel));
-//
-//        if (peselExists) {
-//            throw new IllegalArgumentException("Pesel exists: " + pesel);
-//        }
-
         employeeDataFromRepo.add(employeeData);
         return employeeData;
     }
@@ -38,9 +30,10 @@ public class EmployeeDataRepository {
                 .anyMatch(data -> data.getEmployeePesel().equals(pesel));
     }
 
-    public void createAll(List<EmployeeData> employeesToCreate){
+    public void createAll(List<EmployeeData> employeesToCreate) {
         employeeDataFromRepo.addAll(employeesToCreate);
     }
+
     public List<EmployeeData> getData(String pesel) {
         return employeeDataFromRepo.stream()
                 .filter(employeeData -> employeeData.getEmployeePesel().equals(pesel))
@@ -54,17 +47,36 @@ public class EmployeeDataRepository {
                 .collect(Collectors.toList());
     }
 
+    public List<EmployeeData> getMonthlyData(String pesel, int year, int month ) {
+        return employeeDataFromRepo.stream()
+                .filter(employeeData -> employeeData.getEmployeePesel().equals(pesel))
+                .filter(employeeData -> employeeData.getYear() == (year))
+                .filter(employeeData -> employeeData.getMonth() == (month))
+                .collect(Collectors.toList());
+    }
+
+    public List<EmployeeData> getTotalSalaryForEmp(String pesel) {
+        return employeeDataFromRepo.stream()
+                .filter(employeeData -> employeeData.getEmployeePesel().equals(pesel))
+                .collect(Collectors.toList());
+    }
+
     public EmployeeData updateData(String employeeId, EmployeeData employeeData) {
         List<EmployeeData> employeeDataList = getData(employeeId);
-        Optional<EmployeeData> oldData = employeeDataList.stream()
-                .filter(data -> Objects.equals(data.getMonth(), employeeData.getMonth()))
-                .findFirst();
+        List<EmployeeData> updatedList = new ArrayList<>();
 
-        oldData.ifPresent(old -> {
-            int index = employeeDataList.indexOf(old);
-            employeeDataList.set(index, employeeData);
-        });
+        for (EmployeeData updatedEmployeeData:updatedList) {
+            Optional<EmployeeData> oldData = employeeDataList.stream()
+                    .filter(data -> Objects.equals(data.getMonth(), employeeData.getMonth()))
+                    .findFirst();
 
+            oldData.ifPresent(old -> {
+                int index = employeeDataList.indexOf(old);
+                employeeDataList.set(index, employeeData);
+                updatedList.add(updatedEmployeeData);
+            });
+        }
+        
         return employeeData;
     }
 
@@ -72,7 +84,7 @@ public class EmployeeDataRepository {
         employeeDataFromRepo.removeAll(getData(employeeId));
     }
 
-    public void deleteAll(){
+    public void deleteAll() {
         this.employeeDataFromRepo.clear();
     }
 

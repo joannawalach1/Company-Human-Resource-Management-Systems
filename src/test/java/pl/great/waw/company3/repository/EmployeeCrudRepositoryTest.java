@@ -1,5 +1,6 @@
 package pl.great.waw.company3.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.great.waw.company3.domain.Employee;
 
@@ -19,7 +20,6 @@ class EmployeeCrudRepositoryTest {
     private static final String TEST_LASTNAME_2 = "Zawodowiec";
 
     private final EmployeeRepository employeeRepo = new EmployeeRepository();
-
 
     @Test
     void getEmployee() {

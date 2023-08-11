@@ -7,17 +7,19 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import pl.great.waw.company3.controller.EmployeeDto;
 import pl.great.waw.company3.domain.Employee;
+import pl.great.waw.company3.domain.EmployeeData;
 import pl.great.waw.company3.repository.EmployeeDataRepository;
 import pl.great.waw.company3.repository.EmployeeRepository;
-import pl.great.waw.company3.service.mapper.EmployeeMapper;
+import pl.great.waw.company3.service.mapstruct.EmployeeMapperInterface;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
@@ -30,7 +32,7 @@ public class EmployeeServiceTest {
     private EmployeeDataRepository employeeDataRepository;
 
     @Mock
-    private EmployeeMapper employeeMapper;
+    private EmployeeMapperInterface employeeMapperInterface;
 
     @Mock
     private Comparator comparator;
@@ -41,16 +43,19 @@ public class EmployeeServiceTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        List<Employee> employees = new ArrayList<>();
     }
+    private Employee employee = new Employee("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));;
+    private List<Employee> employees = List.of(employee);
+    private EmployeeDto employeeDto= new EmployeeDto("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
+
 
     @Test
-    public void testCreateEmployee() {
+    public void shouldCreateEmployee() {
         // Given
-        EmployeeDto employeeDto = new EmployeeDto("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee = new Employee("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
-        when(employeeMapper.fromDto(employeeDto)).thenReturn(employee);
+        when(employeeMapperInterface.dtoToEmployee(employeeDto)).thenReturn(employee);
         when(employeeRepository.create(employee)).thenReturn(employee);
-        when(employeeMapper.toDto(employee)).thenReturn(employeeDto);
+        when(employeeMapperInterface.employeeToDto(employee)).thenReturn(employeeDto);
 
         // When
         EmployeeDto createdEmployeeDto = employeeService.create(employeeDto);
@@ -60,13 +65,11 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testGetEmployee() {
+    public void shouldGetEmployee() {
         // Given
-        String pesel = "0123456789";
-        EmployeeDto employeeDto = new EmployeeDto("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee = new Employee("0123456789", "Anna", "Waren", BigDecimal.valueOf(4500));
+        String pesel = "1234567890";
         when(employeeRepository.get(pesel)).thenReturn(employee);
-        when(employeeMapper.toDto(employee)).thenReturn(employeeDto);
+        when(employeeMapperInterface.employeeToDto(employee)).thenReturn(employeeDto);
 
         // When
         EmployeeDto retrievedEmployeeDto = employeeService.get(pesel);
@@ -76,9 +79,9 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testDeleteEmployee() {
+    public void shouldDeleteEmployee() {
         // Given
-        String pesel = "0123456789";
+        String pesel = "1234567890";
         when(employeeRepository.delete(pesel)).thenReturn(true);
 
         // When
@@ -89,13 +92,11 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testUpdateEmployee() {
+    public void shouldUpdateEmployee() {
         // Given
-        EmployeeDto employeeDto = new EmployeeDto("0123456789", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee = new Employee("0123456789", "Anna", "Waren", BigDecimal.valueOf(4500));
-        when(employeeMapper.fromDto(employeeDto)).thenReturn(employee);
+        when(employeeMapperInterface.dtoToEmployee(employeeDto)).thenReturn(employee);
         when(employeeRepository.update(employee)).thenReturn(employee);
-        when(employeeMapper.toDto(employee)).thenReturn(employeeDto);
+        when(employeeMapperInterface.employeeToDto(employee)).thenReturn(employeeDto);
 
         // When
         EmployeeDto updatedEmployeeDto = employeeService.update(employeeDto);
@@ -105,41 +106,88 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void testGetAllEmployees() {
+    public void shouldGetAllEmployees() {
         // Given
-        List<Employee> employees = new ArrayList<>();
-        EmployeeDto employeeDto = new EmployeeDto("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee1 = new Employee("0123456789", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee2 = new Employee("0123456790", "Anna", "Waren", BigDecimal.valueOf(4500));
-        employees.add(employee1);
-        employees.add(employee2);
+        when(employeeMapperInterface.dtoToEmployee(employeeDto)).thenReturn(employee);
         when(employeeRepository.getAllEmployees()).thenReturn(employees);
-        when(employeeMapper.toDto(employee1)).thenReturn(employeeDto);
-        when(employeeMapper.toDto(employee2)).thenReturn(employeeDto);
+        when(employeeMapperInterface.employeeToDto(employee)).thenReturn(employeeDto);
 
         // When
+
         List<EmployeeDto> allEmployeeDtos = employeeService.getAll();
 
         // Then
+
         assertNotNull(allEmployeeDtos);
     }
 
     @Test
-    public void testSortEmployees() {
+    public void shouldSortEmployees() {
         // Given
-        List<Employee> employees = new ArrayList<>();
-        EmployeeDto employeeDto = new EmployeeDto("1234567890", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee1 = new Employee("0123456789", "Anna", "Waren", BigDecimal.valueOf(4500));
-        Employee employee2 = new Employee("0123456790", "Anna", "Waren", BigDecimal.valueOf(4500));
-        employees.add(employee1);
-        employees.add(employee2);
         when(employeeRepository.sortAllEmployees(any(Comparator.class))).thenReturn(employees);
-        when(employeeMapper.toDto(employee1)).thenReturn(employeeDto);
+        when(employeeMapperInterface.employeeToDto(employee)).thenReturn(employeeDto);
 
         // When
         List<EmployeeDto> sortedEmployeeDtos = employeeService.sort(comparator);
 
         // Then
         assertNotNull(sortedEmployeeDtos);
+    }
+
+    @Test
+    void shouldTotalYearlySalaryReturnOneThousandFiveHundred() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        EmployeeData employeeData1 = new EmployeeData("1", "1234567890", 4, 2023, BigDecimal.valueOf(1000), LocalDateTime.now(), LocalDateTime.now());
+        EmployeeData employeeData2 = new EmployeeData("2", "1234567890", 5, 2023, BigDecimal.valueOf(500), LocalDateTime.now(), LocalDateTime.now());
+        Collections.addAll(employeesData, employeeData1, employeeData2);
+        when(employeeDataRepository.getYearlyData(any(), any(Integer.class))).thenReturn(employeesData);
+        BigDecimal sum = employeeService.totalYearlySalary(employeeData1.getEmployeePesel(), employeeData1.getYear());
+        assertEquals(BigDecimal.valueOf(1500), sum);
+    }
+
+    @Test
+    void shouldTotalYearlySalaryReturnZero() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        when(employeeDataRepository.getYearlyData(any(), any(Integer.class))).thenReturn(employeesData);
+        BigDecimal sum = employeeService.totalYearlySalary("4", 2022);
+        assertEquals(BigDecimal.valueOf(0), sum);
+    }
+
+    @Test
+    void shouldMonthlySalaryInYearReturnOneThousandFiveHundred() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        EmployeeData employeeData1 = new EmployeeData("1", "1234567890", 4, 2023, BigDecimal.valueOf(1000), LocalDateTime.now(), LocalDateTime.now());
+        EmployeeData employeeData2 = new EmployeeData("2", "1234567890", 4, 2023, BigDecimal.valueOf(500), LocalDateTime.now(), LocalDateTime.now());
+        Collections.addAll(employeesData, employeeData1, employeeData2);
+        when(employeeDataRepository.getMonthlyData(any(), any(Integer.class), any(Integer.class))).thenReturn(employeesData);
+        BigDecimal sum = employeeService.monthlySalaryInYear(employeeData1.getEmployeePesel(), employeeData1.getYear(), employeeData2.getMonth());
+        assertEquals(BigDecimal.valueOf(1500), sum);
+    }
+
+    @Test
+    void shouldMonthlySalaryInYearReturnZero() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        when(employeeDataRepository.getMonthlyData(any(), any(Integer.class), any(Integer.class))).thenReturn(employeesData);
+        BigDecimal sum = employeeService.monthlySalaryInYear("4", 2022, 4);
+        assertEquals(BigDecimal.valueOf(0), sum);
+    }
+
+    @Test
+    void shouldTotalSalaryForEmpReturnOneThousandFiveHundred() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        EmployeeData employeeData1 = new EmployeeData("1", "1234567890", 4, 2023, BigDecimal.valueOf(1000), LocalDateTime.now(), LocalDateTime.now());
+        EmployeeData employeeData2 = new EmployeeData("2", "1234567890", 4, 2023, BigDecimal.valueOf(500), LocalDateTime.now(), LocalDateTime.now());
+        Collections.addAll(employeesData, employeeData1, employeeData2);
+        when(employeeDataRepository.getTotalSalaryForEmp(any())).thenReturn(employeesData);
+        BigDecimal sum = employeeService.totalSalaryForEmp(employeeData1.getEmployeePesel());
+        assertEquals(BigDecimal.valueOf(1500), sum);
+    }
+
+    @Test
+    void shouldTotalSalaryForEmpReturnZero() {
+        List<EmployeeData> employeesData = new ArrayList<>();
+        when(employeeDataRepository.getMonthlyData(any(), any(Integer.class), any(Integer.class))).thenReturn(employeesData);
+        BigDecimal sum = employeeService.totalSalaryForEmp("4");
+        assertEquals(BigDecimal.valueOf(0), sum);
     }
 }
