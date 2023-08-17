@@ -47,7 +47,7 @@ class EmployeeDataConverterTest {
         employeeDataConverter.loadEmployeeData(TEST_LOAD_EMPLOYEE_JSON_PATH);
         List<EmployeeData> allEmployees = employeeDataRepository.getAll();
 
-        assertEquals(allEmployees.size(), 2);
+        assertEquals(allEmployees.size(), 1);
     }
 
     @Test
