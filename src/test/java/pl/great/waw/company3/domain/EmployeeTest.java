@@ -1,9 +1,7 @@
 package pl.great.waw.company3.domain;
 
 import org.junit.jupiter.api.Test;
-
 import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EmployeeTest {
@@ -11,7 +9,7 @@ class EmployeeTest {
     @Test
     void getPesel() {
 
-        int maxValue = Integer.MAX_VALUE + Integer.MAX_VALUE;
+        int maxValue = Integer.MAX_VALUE;
 
         Employee employee = new Employee("8787878787", "pawel", "sz", BigDecimal.ONE);
 

@@ -1,9 +1,9 @@
 [
   {
-    "pesel": "string",
-    "firstName": "string",
-    "lastName": "string",
-    "salary": 0,
+    "pesel": "1234567890",
+    "firstName": "Joanna",
+    "lastName": "Walczak",
+    "salary": 5000,
     "created": [
       2023,
       7,
@@ -24,10 +24,10 @@
     ]
   },
   {
-    "pesel": "string1",
-    "firstName": "string",
-    "lastName": "string",
-    "salary": 0,
+    "pesel": "2345678901",
+    "firstName": "Steve",
+    "lastName": "And",
+    "salary": 1000,
     "created": [
       2023,
       7,
